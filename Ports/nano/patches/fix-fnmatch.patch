@@ -1,0 +1,11 @@
+--- nano-4.9.2/lib/fnmatch.c.orig	Sun May 10 17:11:01 2020
++++ nano-4.9.2/lib/fnmatch.c	Sun May 10 17:11:24 2020
+@@ -86,7 +86,7 @@
+    program understand 'configure --with-gnu-libc' and omit the object files,
+    it is simpler to just do this in the source for each such file.  */
+ 
+-#if defined _LIBC || !defined __GNU_LIBRARY__ || !HAVE_FNMATCH_GNU
++#if 0
+ 
+ 
+ # if ! (defined isblank || (HAVE_ISBLANK && HAVE_DECL_ISBLANK))

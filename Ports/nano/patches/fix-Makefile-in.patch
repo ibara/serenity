@@ -1,0 +1,54 @@
+--- nano-4.9.2/src/Makefile.in.orig	Sun May 10 17:41:43 2020
++++ nano-4.9.2/src/Makefile.in	Sun May 10 17:42:47 2020
+@@ -189,7 +189,7 @@
+ 	cut.$(OBJEXT) files.$(OBJEXT) global.$(OBJEXT) help.$(OBJEXT) \
+ 	history.$(OBJEXT) move.$(OBJEXT) nano.$(OBJEXT) \
+ 	prompt.$(OBJEXT) rcfile.$(OBJEXT) search.$(OBJEXT) \
+-	text.$(OBJEXT) utils.$(OBJEXT) winio.$(OBJEXT)
++	text.$(OBJEXT) utils.$(OBJEXT) winio.$(OBJEXT) isctype.$(OBJEXT)
+ nano_OBJECTS = $(am_nano_OBJECTS)
+ am__DEPENDENCIES_1 =
+ nano_DEPENDENCIES = $(top_builddir)/lib/libgnu.a $(am__DEPENDENCIES_1) \
+@@ -215,7 +215,7 @@
+ 	./$(DEPDIR)/history.Po ./$(DEPDIR)/move.Po ./$(DEPDIR)/nano.Po \
+ 	./$(DEPDIR)/prompt.Po ./$(DEPDIR)/rcfile.Po \
+ 	./$(DEPDIR)/search.Po ./$(DEPDIR)/text.Po ./$(DEPDIR)/utils.Po \
+-	./$(DEPDIR)/winio.Po
++	./$(DEPDIR)/winio.Po ./$(DEPDIR)/isctype.Po
+ am__mv = mv -f
+ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+ 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+@@ -1532,7 +1532,8 @@
+ 		search.c \
+ 		text.c \
+ 		utils.c \
+-		winio.c
++		winio.c \
++		isctype.c
+ 
+ nano_LDADD = @LIBINTL@ $(top_builddir)/lib/libgnu.a \
+ 		$(LIB_CLOCK_GETTIME) $(LIBTHREAD)
+@@ -1639,6 +1640,7 @@
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/text.Po@am__quote@ # am--include-marker
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/utils.Po@am__quote@ # am--include-marker
+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/winio.Po@am__quote@ # am--include-marker
++@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/isctype.Po@am__quote@ # am--include-marker
+ 
+ $(am__depfiles_remade):
+ 	@$(MKDIR_P) $(@D)
+@@ -1804,6 +1806,7 @@
+ 	-rm -f ./$(DEPDIR)/text.Po
+ 	-rm -f ./$(DEPDIR)/utils.Po
+ 	-rm -f ./$(DEPDIR)/winio.Po
++	-rm -f ./$(DEPDIR)/isctype.Po
+ 	-rm -f Makefile
+ distclean-am: clean-am distclean-compile distclean-generic \
+ 	distclean-tags
+@@ -1866,6 +1869,7 @@
+ 	-rm -f ./$(DEPDIR)/text.Po
+ 	-rm -f ./$(DEPDIR)/utils.Po
+ 	-rm -f ./$(DEPDIR)/winio.Po
++	-rm -f ./$(DEPDIR)/isctype.Po
+ 	-rm -f Makefile
+ maintainer-clean-am: distclean-am maintainer-clean-generic
+ 

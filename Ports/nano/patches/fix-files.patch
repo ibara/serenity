@@ -1,12 +1,13 @@
-diff -ru nano-4.5-original/nano-4.5/src/files.c nano-4.5/src/files.c
---- nano-4.5-original/nano-4.5/src/files.c	2019-10-04 04:38:05.000000000 -0500
-+++ nano-4.5/src/files.c	2019-11-13 02:17:33.268207958 -0600
-@@ -31,6 +31,7 @@
+--- nano-4.9.2/src/files.c.orig	Sun May 10 16:49:01 2020
++++ nano-4.9.2/src/files.c	Sun May 10 16:50:07 2020
+@@ -31,6 +31,10 @@
  #include <unistd.h>
+ #include <sys/wait.h>
  
- #define LOCKBUFSIZE 8192
-+#define P_tmpdir        "/tmp"
- 
- /* Verify that the containing directory of the given filename exists. */
- bool has_valid_path(const char *filename)
-
++#ifndef P_tmpdir
++#define P_tmpdir	"/tmp"
++#endif
++
+ #ifndef NANO_TINY
+ static pid_t pid_of_command = -1;
+ 		/* The PID of a forked process -- needed when wanting to abort it. */

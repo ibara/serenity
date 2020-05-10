@@ -35,35 +35,35 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-int remove(bool recursive, String path)
+int remove(bool force, bool recursive, String path)
 {
     struct stat path_stat;
-    if (lstat(path.characters(), &path_stat) < 0) {
+    if (lstat(path.characters(), &path_stat) < 0 && !force) {
         perror("lstat");
         return 1;
     }
 
     if (S_ISDIR(path_stat.st_mode) && recursive) {
         auto di = Core::DirIterator(path, Core::DirIterator::SkipParentAndBaseDir);
-        if (di.has_error()) {
+        if (di.has_error() && !force) {
             fprintf(stderr, "DirIterator: %s\n", di.error_string());
             return 1;
         }
 
         while (di.has_next()) {
-            int s = remove(true, di.next_full_path());
+            int s = remove(force, true, di.next_full_path());
             if (s != 0)
                 return s;
         }
 
         int s = rmdir(path.characters());
-        if (s < 0) {
+        if (s < 0 && !force) {
             perror("rmdir");
             return 1;
         }
     } else {
         int rc = unlink(path.characters());
-        if (rc < 0) {
+        if (rc < 0 && !force) {
             perror("unlink");
             return 1;
         }
@@ -78,17 +78,19 @@ int main(int argc, char** argv)
         return 1;
     }
 
+    bool force = false;
     bool recursive = false;
     Vector<const char*> paths;
 
     Core::ArgsParser args_parser;
+    args_parser.add_option(force, "Ignore nonexistent files and arguments", "force", 'f');
     args_parser.add_option(recursive, "Delete directories recursively", "recursive", 'r');
     args_parser.add_positional_argument(paths, "Path(s) to remove", "path");
     args_parser.parse(argc, argv);
 
     int rc = 0;
     for (auto& path : paths) {
-        rc |= remove(recursive, path);
+        rc |= remove(force, recursive, path);
     }
     return rc;
 }
